@@ -1,0 +1,20 @@
+
+
+
+<div class="flex justify-center items-center flex-col">
+	
+	<header class="text-center text-4xl text-blue-500 font-bold mt-4">IEEE-754 Decimal-32 floating point translator</header>
+
+	<div class="flex mt-12 w-2/6 gap-1 flex-col">	
+		<label>Input data in 8 digit Hex (0xABCDEF) or 32 Bit Binary (0101...)</label>
+		<textarea (input)="textarea_input($event)" class="border-2 border-black rounded-lg"></textarea>
+		<app-error-msg [message]="error_message"></app-error-msg>
+		<button (click)="button_start()" class="p-3 border-green-500 border-2 rounded-lg mt-4" >Start Conversion</button>
+	</div>
+
+
+
+</div>
+
+
+
