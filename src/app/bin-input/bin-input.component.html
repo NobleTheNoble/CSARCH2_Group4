@@ -1,4 +1,4 @@
-<div class="flex flex-col">
+<div class="flex flex-col mt-4">
     <p class="self-center text-2xl">Binary Input</p>
 
     <div class="flex gap-4">
@@ -6,46 +6,48 @@
         <div class="flex flex-col items-center">
             <p>Sign Bit</p>
             <div class="flex gap-1 mt-1">
-                <button [ngStyle]="{'background-color': signbit == 1 ? 'rgb(52, 211, 153)' : 'white'}"
-                (click)="signbit = signbit == 0 ? 1 : 0"></button>
+                <button [ngStyle]="{'background-color': bits[0] == 1 ? 'rgb(52, 211, 153)' : 'white'}"
+                (click)="bits[0] = bits[0] == 0 ? 1 : 0"></button>
             </div>
         </div>
         
-        
-        <!--Combination Field-->
         <div class="flex flex-col items-center">
             <p>Combination Field</p>
             <div class="flex gap-1 mt-1">
-                <button *ngFor="let item of combinationfield; let i=index"
-                [ngStyle]="{'background-color': combinationfield[i] == 1 ? 'rgb(52, 211, 153)' : 'white'}"
-                (click)="combinationfield[i] = combinationfield[i] == 0 ? 1 : 0">
+                <button *ngFor="let item of cf_indices; let i = index"
+                [ngStyle]="{'background-color': bits[cf_indices[i]] == 1 ? 'rgb(52, 211, 153)' : 'white'}"
+                (click)="bits[cf_indices[i]] = bits[cf_indices[i]] == 0 ? 1 : 0">
                 </button>
             </div>
         </div>
-        
-        <!--exponent continuation-->
+
         <div class="flex flex-col items-center">
             <p>Exponent Continuation</p>
             <div class="flex gap-1 mt-1">
-                <button *ngFor="let item of exponentcontinuation; let i=index"
-                [ngStyle]="{'background-color': exponentcontinuation[i] == 1 ? 'rgb(52, 211, 153)' : 'white'}"
-                (click)="exponentcontinuation[i] = exponentcontinuation[i] == 0 ? 1 : 0">
+                <button *ngFor="let item of ec_indices; let i = index"
+                [ngStyle]="{'background-color': bits[ec_indices[i]] == 1 ? 'rgb(52, 211, 153)' : 'white'}"
+                (click)="bits[ec_indices[i]] = bits[ec_indices[i]] == 0 ? 1 : 0">
                 </button>
             </div>
         </div>
-        
-    
-        <!--Coefficient Continuation-->
+
         <div class="flex flex-col items-center">
             <p>Coefficient Continuation</p>
             <div class="flex gap-1 mt-1">
-                <button *ngFor="let item of coefficientcontinuation; let i=index"
-                [ngStyle]="{'background-color': coefficientcontinuation[i] == 1 ? 'rgb(52, 211, 153)' : 'white'}"
-                (click)="coefficientcontinuation[i] = coefficientcontinuation[i] == 0 ? 1 : 0">
+                <button *ngFor="let item of cc_indices; let i = index"
+                [ngStyle]="{'background-color': bits[cc_indices[i]] == 1 ? 'rgb(52, 211, 153)' : 'white'}"
+                (click)="bits[cc_indices[i]] = bits[cc_indices[i]] == 0 ? 1 : 0">
                 </button>
             </div>
         </div>
+
     
+    
+    </div>
+
+    <div class=" flex mt-4 items-center justify-center">
+        <p class="mr-2.5">Binary Input:</p>
+        <input class="border-black w-3/5" type="text" (blur)="onkey_parseinput($event)" [value]="bits.join('')">
     </div>
 
 </div>
