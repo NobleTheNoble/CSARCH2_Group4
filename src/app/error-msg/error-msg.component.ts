@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
 
 @Component({
 	selector: 'app-error-msg',
@@ -10,9 +10,15 @@ export class ErrorMsgComponent implements OnInit {
 
   	constructor() { }
 
-	@Input() message?: string;
+	@Input() message!: string;
 
   	ngOnInit(): void {
+		
   	}
+
+	ngOnChanges(changes: SimpleChanges): void{
+		//console.log('...')
+		console.log('value changed', this.message)
+	}
 
 }

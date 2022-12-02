@@ -1,20 +1,19 @@
 <div class="flex flex-col mt-8">
     <div class="flex gap-4">
-        <!--sign bit-->
         <div class="flex flex-col items-center">
             <p>Sign Bit</p>
             <div class="flex mt-1">
                 <button [ngStyle]="{'background-color': bits[0] == 1 ? 'rgb(52, 211, 153)' : 'white'}"
-                (click)="bits[0] = bits[0] == 0 ? 1 : 0"></button>
+                (click)="bits[0] = bits[0] == 0 ? 1 : 0; update()"></button>
             </div>
         </div>
-        
+
         <div class="flex flex-col items-center">
             <p>Combination Field</p>
             <div class="flex mt-1">
                 <button *ngFor="let item of cf_indices; let i = index"
                 [ngStyle]="{'background-color': bits[cf_indices[i]] == 1 ? 'rgb(52, 211, 153)' : 'white'}"
-                (click)="bits[cf_indices[i]] = bits[cf_indices[i]] == 0 ? 1 : 0">
+                (click)="bits[cf_indices[i]] = bits[cf_indices[i]] == 0 ? 1 : 0; update()">
                 </button>
             </div>
         </div>
@@ -24,10 +23,11 @@
             <div class="flex mt-1">
                 <button *ngFor="let item of ec_indices; let i = index"
                 [ngStyle]="{'background-color': bits[ec_indices[i]] == 1 ? 'rgb(52, 211, 153)' : 'white'}"
-                (click)="bits[ec_indices[i]] = bits[ec_indices[i]] == 0 ? 1 : 0">
+                (click)="bits[ec_indices[i]] = bits[ec_indices[i]] == 0 ? 1 : 0; update()">
                 </button>
             </div>
         </div>
+
 
         <div class="flex flex-col items-center">
             <p>Coefficient Continuation</p>
@@ -35,31 +35,25 @@
                 <div class="flex">
                     <button *ngFor="let item of cc_indices_1; let i = index"
                     [ngStyle]="{'background-color': bits[cc_indices_1[i]] == 1 ? 'rgb(52, 211, 153)' : 'white'}"
-                    (click)="bits[cc_indices_1[i]] = bits[cc_indices_1[i]] == 0 ? 1 : 0">
+                    (click)="bits[cc_indices_1[i]] = bits[cc_indices_1[i]] == 0 ? 1 : 0; update()">
                     </button>
                 </div>
                 <div class="flex ml-1">
                     <button *ngFor="let item of cc_indices_2; let i = index"
                     [ngStyle]="{'background-color': bits[cc_indices_2[i]] == 1 ? 'rgb(52, 211, 153)' : 'white'}"
-                    (click)="bits[cc_indices_2[i]] = bits[cc_indices_2[i]] == 0 ? 1 : 0">
+                    (click)="bits[cc_indices_2[i]] = bits[cc_indices_2[i]] == 0 ? 1 : 0; update()">
                     </button>
                 </div>
-
-                
             </div>
         </div>
-
-    
-    
     </div>
 
     <div class=" flex mt-4 items-center justify-center">
         <p class="mr-2.5">Binary Input:</p>
-        <input #bin_input class="border-black w-2/6" type="text" (blur)="onkey_parseinput($event)" [value]="bits.join('')">
+        <input class="border-black w-2/6" type="text" (blur)="onkey_parseinput($event, 'bin')" [value]="bits.join('')">
         <p class="ml-4 mr-1">Hex Input: 0x</p>
-        <input #hex_input class="border-black w-1/6" type="text" (blur)="onkey_parseinput($event)" [value]="bin_to_hex_string()">
+        <input class="border-black w-1/6" type="text" (blur)="onkey_parseinput($event, 'hex')" [value]="bin_to_hex_string()">
     </div>
-
 </div>
 
 

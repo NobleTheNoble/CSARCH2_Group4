@@ -1,11 +1,26 @@
 
 
 
-<div class="flex justify-center items-center flex-col">
+<div class="flex items-center flex-col h-screen">
 	
 	<header class="text-center text-4xl text-blue-500 font-bold mt-4">IEEE-754 Decimal-32 floating point translator</header>
 
-	<app-input></app-input>
+	<app-input (send_error)="recieve_error($event)" (calculate)="setvalues()" [bits]="bits"></app-input>
+	<app-error-msg [message]="errormessage"></app-error-msg>
+	
+	<div *ngIf="!flag_infinity" class="font-bold text-4xl mt-16">
+		<span>{{sign}}</span>
+		<span>{{most_significant_digit}}</span>
+		<span>{{decimalvalue1}}</span>
+		<span>{{decimalvalue2}}</span>
+		<span>x10<sup>{{exponent}}</sup></span>
+	</div>
+
+	<div *ngIf="flag_NaN || flag_infinity">
+		<span *ngIf="flag_NaN">Combination field has a value of [1, 1, 1, 1, 1], therefore the value is NaN</span>
+		<span *ngIf="flag_infinity">Combination field has a value of [1, 1, 1, 1, 0], therefore the value is {{sign == "+" ? "Positive" : "Negative"}} Infinity</span>
+	</div>
+	
 
 </div>
 

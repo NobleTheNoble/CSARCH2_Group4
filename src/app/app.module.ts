@@ -5,6 +5,7 @@ import { AppComponent } from './app.component';
 import { ErrorMsgComponent } from './error-msg/error-msg.component';
 import { InputComponent } from './input/input.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,
