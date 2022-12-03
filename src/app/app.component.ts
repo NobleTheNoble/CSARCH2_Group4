@@ -124,33 +124,59 @@ export class AppComponent {
 
 	save_output(){
 		//https://stackoverflow.com/questions/19327749/javascript-blob-filename-without-link/19328891#19328891
+		let file_text!: object
 
 		let section1 = {
-			"sign bit" : this.bits[0],
+			"sign bit" : this.bits[0].toString(),
 			"combination field" : this.bits.slice(1, 6).join(''),
 			"exponent continuation" : this.bits.slice(6, 12).join(''),
 			"coefficient continuation 1" : this.bits.slice(12, 22).join(''),
 			"coefficient continuation 2" : this.bits.slice(22, 32).join(''),	
 		}
 
-		let section2 = {
-			"coefficient continuation 1 in decimal" : this.decimalvalue1,
-			"coefficient continuation 2 in decimal" : this.decimalvalue2,
-			"most significant digit" : this.most_significant_digit,
-			"exponent if using fixed notation" : this.exponent1,
-			"exponent if using floating point notation" : this.exponent2
-		}
+		if (this.flag_infinity){
+			let section2 = {
+				"is infinity" : this.flag_infinity,
+				"answer" : [this.bits[0] == 1 ? "negative" : "positive", "infinity"].join(' ')
+			}
 
-		let section3 = {
-			"answer in fixed notation" : [this.sign,this.full_decimal_value1,"x10^",this.exponent1].join(''),
-			"answer in floating point notation" : [this.sign,this.full_decimal_value2,"x10^",this.exponent2].join('')
+			file_text = {
+				"input" : section1,
+				"answer" : section2
+			}
+		}
+		else if(this.flag_NaN){
+			let section2 = {
+				"is NaN" : this.flag_NaN,
+				"answer" : "NaN"
+			}
+
+			file_text = {
+				"input" : section1,
+				"answer" : section2
+			}
+		}
+		else{
+			let section2 = {
+				"coefficient continuation 1 in decimal" : this.decimalvalue1,
+				"coefficient continuation 2 in decimal" : this.decimalvalue2,
+				"most significant digit" : this.most_significant_digit,
+				"exponent if using fixed notation" : this.exponent1.toString(),
+				"exponent if using floating point notation" : this.exponent2.toString()
+			}
+	
+			let section3 = {
+				"answer in fixed notation" : [this.sign,this.full_decimal_value1,"x10^",this.exponent1].join(''),
+				"answer in floating point notation" : [this.sign,this.full_decimal_value2,"x10^",this.exponent2].join('')
+			}
+
+			file_text = {
+				"input" : section1,
+				"conversions" : section2,
+				"answer" : section3
+			}
 		}
 		
-		let file_text = {
-			"input" : section1,
-			"conversions" : section2,
-			"answer" : section3
-		}
 
 		let file = new Blob([JSON.stringify(file_text, null, 2)], {type : ".txt"})
 
