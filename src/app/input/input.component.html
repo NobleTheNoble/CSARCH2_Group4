@@ -3,7 +3,7 @@
         <div class="flex flex-col items-center">
             <p>Sign Bit</p>
             <div class="flex mt-1">
-                <button [ngStyle]="{'background-color': bits[0] == 1 ? 'rgb(52, 211, 153)' : 'white'}"
+                <button [ngStyle]="{'background-color': bits[0] == 1 ? 'rgba(34, 197, 94)' : 'white'}"
                 (click)="bits[0] = bits[0] == 0 ? 1 : 0; update()"></button>
             </div>
         </div>
@@ -12,7 +12,7 @@
             <p>Combination Field</p>
             <div class="flex mt-1">
                 <button *ngFor="let item of cf_indices; let i = index"
-                [ngStyle]="{'background-color': bits[cf_indices[i]] == 1 ? 'rgb(52, 211, 153)' : 'white'}"
+                [ngStyle]="{'background-color': bits[cf_indices[i]] == 1 ? 'rgba(34, 197, 94)' : 'white'}"
                 (click)="bits[cf_indices[i]] = bits[cf_indices[i]] == 0 ? 1 : 0; update()">
                 </button>
             </div>
@@ -22,7 +22,7 @@
             <p>Exponent Continuation</p>
             <div class="flex mt-1">
                 <button *ngFor="let item of ec_indices; let i = index"
-                [ngStyle]="{'background-color': bits[ec_indices[i]] == 1 ? 'rgb(52, 211, 153)' : 'white'}"
+                [ngStyle]="{'background-color': bits[ec_indices[i]] == 1 ? 'rgba(34, 197, 94)' : 'white'}"
                 (click)="bits[ec_indices[i]] = bits[ec_indices[i]] == 0 ? 1 : 0; update()">
                 </button>
             </div>
@@ -34,13 +34,13 @@
             <div class="flex gap-1 mt-1">
                 <div class="flex">
                     <button *ngFor="let item of cc_indices_1; let i = index"
-                    [ngStyle]="{'background-color': bits[cc_indices_1[i]] == 1 ? 'rgb(52, 211, 153)' : 'white'}"
+                    [ngStyle]="{'background-color': bits[cc_indices_1[i]] == 1 ? 'rgba(34, 197, 94)' : 'white'}"
                     (click)="bits[cc_indices_1[i]] = bits[cc_indices_1[i]] == 0 ? 1 : 0; update()">
                     </button>
                 </div>
                 <div class="flex ml-1">
                     <button *ngFor="let item of cc_indices_2; let i = index"
-                    [ngStyle]="{'background-color': bits[cc_indices_2[i]] == 1 ? 'rgb(52, 211, 153)' : 'white'}"
+                    [ngStyle]="{'background-color': bits[cc_indices_2[i]] == 1 ? 'rgba(34, 197, 94)' : 'white'}"
                     (click)="bits[cc_indices_2[i]] = bits[cc_indices_2[i]] == 0 ? 1 : 0; update()">
                     </button>
                 </div>

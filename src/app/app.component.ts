@@ -1,3 +1,4 @@
+import { ThisReceiver } from '@angular/compiler';
 import { Component } from '@angular/core';
 
 @Component({
@@ -10,56 +11,63 @@ export class AppComponent {
 	bits: number[] = []
 	errormessage = ""
 
+	output_type = "fixed"
+
 	sign = '+'
 	most_significant_digit = "0"
-	exponent = "0"
 	decimalvalue1 = "000"
 	decimalvalue2 = "000"
+	exponent = "0"
+	
+	full_decimal_value1 = 0
+	exponent1 = 0
 
 	flag_infinity = false
 	flag_NaN = false
 
-	// from https://codegolf.stackexchange.com/questions/176371/densely-packed-decimal-dpd-to-decimal
-	/*
-		a = bin[0]
-		b = 1
-		c = 2
-		d = 3
-		e = 4
-		f = 5
-		g = 6
-		h = 7
-		i = 8
-		j = 9
-
-		G(a:number,b:number,c:number,d:number,e:number,f:number,g:number,h:number,i:number,j:number) {
-		if (!g) return [a*4+b*2+c,d*4+e*2+f,h*4+i*2+j];
-		else if (g && !h && !i) return [a*4+b*2+c,d*4+e*2+f,8+j];
-		else if (g &&!h &&i) return [a*4+b*2+c,8+f,d*4+e*2+j];
-		else if (g && h && !i) return [8+c,d*4+e*2+f,a*4+b*2+j];
-		else if (!d && !e && g && h && i) return [8+c,8+f,a*4+b*2+j];
-		else if (!d && e && g && h && i) return [8+c,a*4+b*2+f,8+j];
-		else if (d && !e && g && h && i) return [a*4+b*2+c,8+f,8+j];
-		else if (d && e && g && h && i) return [8+c,8+f,8+j];
-		return [0,0,0]
-	}
-	*/
+	full_decimal_value2 = 0
+	exponent2 = 0
 
 	setvalues(){
 		if (this.bits[1] && this.bits[2] && this.bits[3] && this.bits[4] && this.bits[5]){
+			this.flag_infinity = false
 			this.flag_NaN = true
 		}
 		else if(this.bits[1] && this.bits[2] && this.bits[3] && this.bits[4]){
+			this.flag_NaN = false
 			this.flag_infinity = true
 			this.sign = !this.bits[0] ? "+" : "-"
 		}else{
+			
 			this.flag_NaN = false
 			this.flag_infinity = false
+			
+			//get values as string
 			this.sign = !this.bits[0] ? "+" : "-"
 			this.set_most_significant_digit()
 			this.set_exponent()
 			this.decimalvalue1 = this.densely_packed_bcd_to_decimal(this.bits.slice(12, 22)).join('')
 			this.decimalvalue2 = this.densely_packed_bcd_to_decimal(this.bits.slice(22, 32)).join('')
+
+
+			//first type
+			this.full_decimal_value1 = parseInt(this.most_significant_digit.concat(this.decimalvalue1.concat(this.decimalvalue2)))
+			this.exponent1 = parseInt(this.exponent)
+
+			//second type
+			let dec_value_string = this.full_decimal_value1.toString()
+			console.log(dec_value_string)
+			dec_value_string = [...dec_value_string[0], ".", ...dec_value_string.slice(1)].join('')
+			console.log(dec_value_string)
+			this.full_decimal_value2 = parseFloat(dec_value_string)
+			this.exponent2 = Number(this.exponent1) + (this.full_decimal_value1.toString().length - 1)
+
+			while(this.full_decimal_value2 > 10){
+				this.full_decimal_value2 /= 10
+				this.exponent2++
+			}
+			 
+
 		}		
 	}
 	
@@ -112,6 +120,50 @@ export class AppComponent {
 
 	recieve_error(message: any){
 		this.errormessage = message
+	}
+
+	save_output(){
+		//https://stackoverflow.com/questions/19327749/javascript-blob-filename-without-link/19328891#19328891
+
+		let section1 = {
+			"sign bit" : this.bits[0],
+			"combination field" : this.bits.slice(1, 6).join(''),
+			"exponent continuation" : this.bits.slice(6, 12).join(''),
+			"coefficient continuation 1" : this.bits.slice(12, 22).join(''),
+			"coefficient continuation 2" : this.bits.slice(22, 32).join(''),	
+		}
+
+		let section2 = {
+			"coefficient continuation 1 in decimal" : this.decimalvalue1,
+			"coefficient continuation 2 in decimal" : this.decimalvalue2,
+			"most significant digit" : this.most_significant_digit,
+			"exponent if using fixed notation" : this.exponent1,
+			"exponent if using floating point notation" : this.exponent2
+		}
+
+		let section3 = {
+			"answer in fixed notation" : [this.sign,this.full_decimal_value1,"x10^",this.exponent1].join(''),
+			"answer in floating point notation" : [this.sign,this.full_decimal_value2,"x10^",this.exponent2].join('')
+		}
+		
+		let file_text = {
+			"input" : section1,
+			"conversions" : section2,
+			"answer" : section3
+		}
+
+		let file = new Blob([JSON.stringify(file_text, null, 2)], {type : ".txt"})
+
+		var a = document.createElement("a"),
+                url = URL.createObjectURL(file);
+        a.href = url;
+        a.download = "Output"
+        document.body.appendChild(a);
+        a.click();
+        setTimeout(function() {
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);  
+        }, 0); 
 	}
 
 	constructor(){

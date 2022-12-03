@@ -4,6 +4,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { ErrorMsgComponent } from './error-msg/error-msg.component';
 import { InputComponent } from './input/input.component';
+import { FormsModule } from '@angular/forms';
+
 
 
 @NgModule({
@@ -13,7 +15,8 @@ import { InputComponent } from './input/input.component';
     InputComponent,
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
