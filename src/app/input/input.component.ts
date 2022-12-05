@@ -11,10 +11,9 @@ export class InputComponent {
 	@Output() send_error = new EventEmitter()
 	@Output() calculate = new EventEmitter()
 
-	cf_indices = [1, 2, 3, 4, 5]
-	ec_indices = [6, 7, 8, 9, 10, 11]
-	cc_indices_1 = [12, 13, 14, 15, 16, 17, 18, 19, 20, 21]
-	cc_indices_2 = [22, 23, 24, 25, 26, 27, 28, 29, 30, 31]
+	er_indices = [1, 2, 3, 4, 5, 6, 7, 8]
+	fp_indices = [9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31]
+	
 	regex_bin = "^[0-1]{32}$"
 	regex_hex = "^[0-9A-Fa-f]{8}$"
 

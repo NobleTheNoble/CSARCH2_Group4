@@ -10,29 +10,33 @@
 
 	<div class="flex gap-4">
 		Output in: 
-		<span><input type="radio" name="output_type" value="fixed" [(ngModel)]="output_type" class="mr-2">Fixed</span>
 		<span><input type="radio" name="output_type" value="floatingpoint" [(ngModel)]="output_type" class="mr-2">Floating Point</span>
+		<span><input type="radio" name="output_type" value="fixed" [(ngModel)]="output_type" class="mr-2">Fixed</span>
+		
 	</div>
 	
 	
 
-	<div class="flex gap-8" *ngIf="!flag_infinity && !flag_NaN">
-		<div *ngIf="output_type === 'fixed'" class="font-bold text-4xl mt-16">
-			<span>{{sign}}{{full_decimal_value1}}x10<sup>{{exponent1}}</sup></span>
-		</div>
-
+	<div class="flex gap-8">
 		<div *ngIf="output_type === 'floatingpoint'" class="font-bold text-4xl mt-16">
-			<span>{{sign}}{{full_decimal_value2}}x10<sup>{{exponent2}}</sup></span>
+			<span>{{floating_point_decimal_value}}</span>
 		</div>
+
+		<div *ngIf="output_type === 'fixed'" class="font-bold text-4xl mt-16">
+			<span>{{fixed_decimal_value}}</span>
+		</div>
+		
 	</div>
 
+	<!--
 	<div *ngIf="flag_NaN || flag_infinity" class="text-4xl mt-16 w-2/3">
 		<span *ngIf="flag_NaN">Combination field has a value of [1, 1, 1, 1, 1]: therefore the value is NaN</span>
 		<span *ngIf="flag_infinity">Combination field has a value of [1, 1, 1, 1, 0]: therefore the value is {{sign == "+" ? "Positive" : "Negative"}} Infinity</span>
 	</div>
+	-->
 
 	<div class="mt-8">
-		<button (click)="save_output()" class="p-4 border-4 rounded-md border-green-500">Export result to text file</button>
+		<button (click)="saveoutput()" class="p-4 border-4 rounded-md border-green-500">Export result to text file</button>
 	</div>
 	
 
