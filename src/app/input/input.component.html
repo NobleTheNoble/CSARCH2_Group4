@@ -34,9 +34,9 @@
 
     <div class=" flex mt-4 items-center justify-center">
         <p class="mr-2.5">Binary Input:</p>
-        <input class="border-black w-2/6" type="text" (blur)="onkey_parseinput($event, 'bin')" [value]="bits.join('')">
+        <input class="border-black w-2/6" type="text" (blur)="onkey_parseinput($event, 'bin')" (onkey.enter)="onkey_parseinput($event, 'bin')" [value]="bits.join('')">
         <p class="ml-4 mr-1">Hex Input: 0x</p>
-        <input class="border-black w-1/6" type="text" (blur)="onkey_parseinput($event, 'hex')" [value]="bin_to_hex_string()">
+        <input class="border-black w-1/6" type="text" (blur)="onkey_parseinput($event, 'hex')" (onkey.enter)="onkey_parseinput($event, 'hex')" [value]="bin_to_hex_string()">
     </div>
 </div>
 
